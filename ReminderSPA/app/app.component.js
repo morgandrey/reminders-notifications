@@ -10,29 +10,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from "@angular/core";
 import { DataService } from "./data.service";
 import { Reminder } from "./reminder";
-import { CookieService } from "ngx-cookie-service";
 import { PushNotificationsService } from "ng-push";
 var AppComponent = /** @class */ (function () {
-    function AppComponent(dataService, cookieService, pushNotifications) {
+    function AppComponent(dataService, pushNotifications) {
+        var _this = this;
         this.dataService = dataService;
-        this.cookieService = cookieService;
         this.pushNotifications = pushNotifications;
-        this.date = { day: "3", month: "1", year: "2020" };
-        this.time = { hour: "20", minute: "15" };
+        this.Date = { day: 30, month: 1, year: 2020 };
+        this.Time = { hour: 17, minute: 20 };
+        setInterval(function () { _this.checkForNotification(); }, 1000);
     }
     AppComponent.prototype.ngOnInit = function () {
         this.loadReminders();
-        this.check();
     };
-    AppComponent.prototype.check = function () {
-        var timeNow = new Date();
-        console.log(timeNow.toLocaleString().replace(/([^T]+)T([^\.]+).*/g, "$1 $2").substring(0, 17));
+    AppComponent.prototype.checkForNotification = function () {
+        var timeNow = new Date().toLocaleString().replace(/([^T]+)T([^\.]+).*/g, "$1 $2").substring(0, 17);
+        for (var i = 0; i < this.reminders.length; i++) {
+            if (this.reminders[i].reminderDate.includes(timeNow)) {
+                this.pushNotification(this.reminders[i]);
+                this.delete(this.reminders[i]);
+                this.loadReminders();
+            }
+        }
     };
     AppComponent.prototype.requestPermission = function () {
         this.pushNotifications.requestPermission();
     };
-    AppComponent.prototype.pushNotification = function () {
-        this.pushNotifications.create("Example One", { body: "Just an example" })
+    AppComponent.prototype.pushNotification = function (reminder) {
+        this.pushNotifications.create("Reminder", { body: reminder.reminderText })
             .subscribe(function (res) {
             if (res.event.type === "click") {
                 // You can do anything else here
@@ -43,7 +48,22 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.loadReminders = function () {
         var _this = this;
         this.dataService.getReminders()
-            .subscribe(function (data) { return _this.reminders = data; });
+            .subscribe(function (data) {
+            _this.reminders = data;
+            _this.reminders.sort(_this.compare);
+        });
+    };
+    AppComponent.prototype.compare = function (a, b) {
+        var dateA = new Date(a.reminderDate).getDate();
+        var dateB = new Date(b.reminderDate).getDate();
+        var comparison = 0;
+        if (dateA > dateB) {
+            comparison = 1;
+        }
+        else if (dateA < dateB) {
+            comparison = -1;
+        }
+        return comparison;
     };
     AppComponent.prototype.delete = function (r) {
         var _this = this;
@@ -52,27 +72,31 @@ var AppComponent = /** @class */ (function () {
     };
     AppComponent.prototype.add = function () {
         var _this = this;
+        if (this.reminderText.trim().length === 0) {
+            return;
+        }
         this.reminder = this.newReminder();
         this.dataService.createReminder(this.reminder)
-            .subscribe(function (data) { return _this.reminders.push(data); });
-        this.loadReminders();
+            .subscribe(function (data) {
+            _this.reminders.push(data);
+            _this.loadReminders();
+        });
     };
     AppComponent.prototype.newReminder = function () {
-        if (+(this.date["day"]) <= 9) {
-            this.date["day"] = "0" + this.date["day"];
+        var reminderDate = this.zero(this.Date['day']) + this.Date['day'] + "."
+            + this.zero(this.Date['month']) + this.Date['month'] + "."
+            + this.Date['year'] + ", "
+            + this.zero(this.Time['hour']) + this.Time['hour'] + ":"
+            + this.zero(this.Time['minute']) + this.Time['minute'];
+        return new Reminder(this.reminderText, reminderDate);
+    };
+    AppComponent.prototype.zero = function (num) {
+        if (num <= 9) {
+            return "0";
         }
-        if (+(this.date["month"]) <= 9) {
-            this.date["month"] = "0" + this.date["month"];
+        else {
+            return "";
         }
-        if (+(this.time["hour"]) <= 9) {
-            this.time["hour"] = "0" + this.time["hour"];
-        }
-        if (+(this.time["minute"]) <= 9) {
-            this.time["minute"] = "0" + this.time["minute"];
-        }
-        var timeToWork = this.date["day"] + "." + this.date["month"] + "." + this.date["year"] + ", "
-            + this.time["hour"] + ":" + this.time["minute"];
-        return new Reminder(this.body, timeToWork);
     };
     AppComponent = __decorate([
         Component({
@@ -80,7 +104,7 @@ var AppComponent = /** @class */ (function () {
             templateUrl: "./app.component.html",
             providers: [DataService]
         }),
-        __metadata("design:paramtypes", [DataService, CookieService, PushNotificationsService])
+        __metadata("design:paramtypes", [DataService, PushNotificationsService])
     ], AppComponent);
     return AppComponent;
 }());
