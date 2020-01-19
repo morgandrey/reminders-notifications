@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.EntityFrameworkCore;
+using Reminders_Notifications.Models;
 
 namespace Reminders_Notifications {
     public class Startup {
@@ -14,7 +16,8 @@ namespace Reminders_Notifications {
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services) {
-
+            services.AddDbContext<RemindersDataContext>(o => o.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddControllers();
         }
 
         [System.Obsolete]
