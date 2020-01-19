@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,20 +21,25 @@ namespace Reminders_Notifications {
             services.AddControllers();
         }
 
-        [System.Obsolete]
+        [Obsolete]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
 
-                // добавляем сборку через webpack
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions {
                     HotModuleReplacement = true
+                });
+
+                app.UseRouting();
+
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
                 });
             }
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
-
         }
     }
 }
