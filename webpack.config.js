@@ -3,8 +3,8 @@ const webpack = require('webpack');
 module.exports = {
     mode: 'development',
     entry: {
-        'polyfills': './ClientApp/polyfills.ts',
-        'app': './ClientApp/main.ts'
+        'polyfills': './ReminderSPA/polyfills.ts',
+        'app': './ReminderSPA/main.ts'
     },
     output: {
         path: path.resolve(__dirname, './wwwroot/dist'),     // путь к каталогу выходных файлов - папка public
@@ -30,7 +30,7 @@ module.exports = {
                 loader: 'html-loader'
             }, {
                 test: /\.css$/,
-                include: path.resolve(__dirname, 'ClientApp/app'),
+                include: path.resolve(__dirname, 'ReminderSPA/app'),
                 loader: 'raw-loader'
             }
         ]
@@ -38,7 +38,7 @@ module.exports = {
     plugins: [
         new webpack.ContextReplacementPlugin(
             /angular(\\|\/)core/,
-            path.resolve(__dirname, 'ClientApp'), // каталог с исходными файлами
+            path.resolve(__dirname, 'ReminderSPA'), // каталог с исходными файлами
             {} // карта маршрутов
         )
     ]

@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Reminders_Notifications.Models;
 
 namespace Reminders_Notifications.Controllers
@@ -16,24 +20,40 @@ namespace Reminders_Notifications.Controllers
             this.dbContext = dbContext;
         }
 
-        // GET: api/Reminders
         [HttpGet]
-        public IEnumerable<Reminders> Get() {
-            return dbContext.Reminders.ToList();
+        public async Task<ActionResult<IEnumerable<Reminders>>> Get() {
+            if (Request.Cookies["idCookie"] == null) {
+                Response.Cookies.Append("idCookie", CreateRandomCookie(12));
+            }
+            var cookie = Request.Cookies["idCookie"];
+            return await dbContext.Reminders.Where(s => s.Cookie.Contains(cookie)).ToListAsync();
         }
 
-        // GET: api/Reminders/5
+        private static string CreateRandomCookie(int length) {
+            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            var res = new StringBuilder();
+            using var rng = new RNGCryptoServiceProvider();
+            var uintBuffer = new byte[sizeof(uint)];
+            while (length-- > 0) {
+                rng.GetBytes(uintBuffer);
+                var num = BitConverter.ToUInt32(uintBuffer, 0);
+                res.Append(valid[(int)(num % (uint)valid.Length)]);
+            }
+
+            return res.ToString();
+        }
+
         [HttpGet("{id}")]
-        public Reminders Get(int id) {
-            var reminder = dbContext.Reminders.FirstOrDefault(x => x.IdReminder == id);
-            return reminder;
+        public async Task<ActionResult<Reminders>> Get(int id) { 
+            return await dbContext.Reminders.FirstOrDefaultAsync(x =>
+                x.IdReminder == id);
         }
 
-        // POST: api/Reminders
         [HttpPost]
         public async Task<ActionResult<Reminders>> Post([FromBody] Reminders reminder)
         {
             if (ModelState.IsValid) {
+                reminder.Cookie = Request.Cookies["idCookie"];
                 await dbContext.Reminders.AddAsync(reminder);
                 await dbContext.SaveChangesAsync();
                 return Ok(reminder);
@@ -41,7 +61,6 @@ namespace Reminders_Notifications.Controllers
             return BadRequest(ModelState);
         }
 
-        // DELETE: api/Reminders/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Reminders>> Delete(int id)
         {

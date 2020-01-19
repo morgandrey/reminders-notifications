@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "0a965c4710fe415f1c41";
+/******/ 	var hotCurrentHash = "ace7f91d988545898ba4";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -796,15 +796,15 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./ClientApp/polyfills.ts":
-/*!********************************!*\
-  !*** ./ClientApp/polyfills.ts ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./ReminderSPA/polyfills.ts":
+/*!**********************************!*\
+  !*** ./ReminderSPA/polyfills.ts ***!
+  \**********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n__webpack_require__(/*! core-js */ \"./node_modules/core-js/index.js\");\r\n__webpack_require__(/*! zone.js/dist/zone */ \"./node_modules/zone.js/dist/zone.js\");\r\n\n\n//# sourceURL=webpack:///./ClientApp/polyfills.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var core_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js */ \"./node_modules/core-js/index.js\");\n/* harmony import */ var core_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var zone_js_dist_zone__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! zone.js/dist/zone */ \"./node_modules/zone.js/dist/zone.js\");\n/* harmony import */ var zone_js_dist_zone__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(zone_js_dist_zone__WEBPACK_IMPORTED_MODULE_1__);\n\r\n\r\n\n\n//# sourceURL=webpack:///./ReminderSPA/polyfills.ts?");
 
 /***/ }),
 
@@ -6482,13 +6482,13 @@ eval("/* WEBPACK VAR INJECTION */(function(global) {/**\n* @license\n* Copyright
 /***/ }),
 
 /***/ 0:
-/*!**************************************************************************************************************!*\
-  !*** multi webpack-hot-middleware/client?path=__webpack_hmr&dynamicPublicPath=true ./ClientApp/polyfills.ts ***!
-  \**************************************************************************************************************/
+/*!****************************************************************************************************************!*\
+  !*** multi webpack-hot-middleware/client?path=__webpack_hmr&dynamicPublicPath=true ./ReminderSPA/polyfills.ts ***!
+  \****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("__webpack_require__(/*! webpack-hot-middleware/client?path=__webpack_hmr&dynamicPublicPath=true */\"./node_modules/webpack-hot-middleware/client.js?path=__webpack_hmr&dynamicPublicPath=true\");\nmodule.exports = __webpack_require__(/*! ./ClientApp/polyfills.ts */\"./ClientApp/polyfills.ts\");\n\n\n//# sourceURL=webpack:///multi_webpack-hot-middleware/client?");
+eval("__webpack_require__(/*! webpack-hot-middleware/client?path=__webpack_hmr&dynamicPublicPath=true */\"./node_modules/webpack-hot-middleware/client.js?path=__webpack_hmr&dynamicPublicPath=true\");\nmodule.exports = __webpack_require__(/*! ./ReminderSPA/polyfills.ts */\"./ReminderSPA/polyfills.ts\");\n\n\n//# sourceURL=webpack:///multi_webpack-hot-middleware/client?");
 
 /***/ })
 

@@ -3,14 +3,23 @@
 <head>
     <meta charset="utf-8" />
     <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Angular in ASP.NET Core</title>
-    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <title>Reminders with notifications</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<app>Загрузка...</app>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Reminders-Notifications</h1>
+    </div>
+    <purchase-app>
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </purchase-app>
 
-<script src="dist/polyfills.js"></script>
-<script src="dist/app.js"></script>
+    <script src="dist/polyfills.js"></script>
+    <script src="dist/app.js"></script>
 </body>
 </html>
