@@ -26,7 +26,7 @@ namespace Reminders_Notifications.Controllers
                 Response.Cookies.Append("idCookie", CreateRandomCookie(12));
             }
             var cookie = Request.Cookies["idCookie"];
-            return await dbContext.Reminders.Where(s => s.Cookie.Contains(cookie)).ToListAsync();
+            return await dbContext.Reminders.Where(s => s.Cookie.Contains(cookie)).OrderByDescending(s => s.ReminderDate).ToListAsync();
         }
 
         private static string CreateRandomCookie(int length) {
