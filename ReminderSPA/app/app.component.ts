@@ -47,10 +47,8 @@ export class AppComponent implements OnInit {
         this.pushNotifications.create(
             "Reminder",
             { body: reminder.reminderText }
-        )
-            .subscribe((res: { event: { type: string; }; notification: { close: () => void; }; }) => {
+        ).subscribe((res: { event: { type: string; }; notification: { close: () => void; }; }) => {
                 if (res.event.type === "click") {
-                    // You can do anything else here
                     res.notification.close();
                 }
             }

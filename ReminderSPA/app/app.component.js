@@ -37,13 +37,7 @@ var AppComponent = /** @class */ (function () {
         this.pushNotifications.requestPermission();
     };
     AppComponent.prototype.pushNotification = function (reminder) {
-        this.pushNotifications.create("Reminder", { body: reminder.reminderText })
-            .subscribe(function (res) {
-            if (res.event.type === "click") {
-                // You can do anything else here
-                res.notification.close();
-            }
-        });
+        this.pushNotifications.create("Reminder", { body: reminder.reminderText });
     };
     AppComponent.prototype.loadReminders = function () {
         var _this = this;

@@ -2,48 +2,40 @@
 
     <div class="row align-items-center my-3">
 
-        <div class="col-md-auto">
-            <form class="form-inline">
-
-                <div class="form-group col-md-6">
-                    <div class="input-group ">
-                        <input class="form-control" placeholder="Input text" [(ngModel)]="reminderText" name="body" />
-                    </div>
-                </div>
-
-                <div class="form-group col-md-5">
-                    <div class="input-group">
-                        <input class="form-control" name="date" [(ngModel)]="Date" ngbDatepicker #d="ngbDatepicker">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-                        </div>
-                    </div>
-                </div>
-
-            </form>
+        <div class="col-5 mx-sm-1 mb-2">
+            <div class="input-group ">
+                <input class="form-control" placeholder="Input text" [(ngModel)]="reminderText" name="body"/>
+            </div>
         </div>
 
-        <div class="col mx-sm-3 mb-2">
+        <div class="col mx-sm-1 mb-2">
+            <div class="input-group">
+                <input class="form-control" name="date" [(ngModel)]="Date" ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col mx-sm-1 mb-2">
             <ngb-timepicker [(ngModel)]="Time" name="time" [spinners]="false"></ngb-timepicker>
         </div>
 
-        <div class="col mx-sm-3 mb-2">
+        <div class="col-3 mx-sm-1 mb-2">
             <button class="btn btn-outline-primary" (click)="add()">Add a reminder</button>
         </div>
-
-        <div class="col mx-sm-3 mb-2">
-            <button class="btn btn-info" (click)="requestPermission()">Enable notifications</button>
+        <div class="col-3 mx-sm-1 mb-2">
+            <button class="btn btn-info" *ngIf="this.pushNotifications.permission != 'granted'" (click)="requestPermission()">Enable notifications</button>
         </div>
-
     </div>
 
     <div class="row">
         <table class="table table-bordered">
             <thead>
-                <tr>
-                    <th>Reminder</th>
-                    <th>Response time</th>
-                </tr>
+            <tr>
+                <th>Reminder</th>
+                <th>Response time</th>
+            </tr>
             </thead>
             <tbody>
             <tr *ngFor="let reminder of reminders">
