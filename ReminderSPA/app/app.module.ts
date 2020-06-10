@@ -7,7 +7,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from "ngx-cookie-service";
 import { PushNotificationsModule } from "ng-push";
-
 @NgModule({
     imports: [BrowserModule, FormsModule, NgbModule, ReactiveFormsModule, HttpClientModule, PushNotificationsModule],
     declarations: [AppComponent],

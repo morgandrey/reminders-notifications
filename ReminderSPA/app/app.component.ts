@@ -13,8 +13,8 @@ import { PushNotificationsService } from "ng-push";
 export class AppComponent implements OnInit {
     reminder: Reminder;
     reminders: Reminder[];
-    Date = { day: 30, month: 1, year: 2020 };
-    Time = { hour: 17, minute: 20};
+    Date = { day: 10, month: 6, year: 2020 };
+    Time = { hour: 12, minute: 20};
     reminderText: string;
     cookie: string;
 

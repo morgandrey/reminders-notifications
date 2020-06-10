@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from "ngx-cookie-service";
 import { PushNotificationsModule } from "ng-push";
+import { DatePipe } from '@angular/common';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -21,7 +22,7 @@ var AppModule = /** @class */ (function () {
             imports: [BrowserModule, FormsModule, NgbModule, ReactiveFormsModule, HttpClientModule, PushNotificationsModule],
             declarations: [AppComponent],
             bootstrap: [AppComponent],
-            providers: [CookieService]
+            providers: [CookieService, DatePipe]
         })
     ], AppModule);
     return AppModule;

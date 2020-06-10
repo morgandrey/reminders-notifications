@@ -11,17 +11,20 @@ import { Component } from "@angular/core";
 import { DataService } from "./data.service";
 import { Reminder } from "./reminder";
 import { PushNotificationsService } from "ng-push";
+import { DatePipe } from '@angular/common';
 var AppComponent = /** @class */ (function () {
-    function AppComponent(dataService, pushNotifications) {
+    function AppComponent(dataService, pushNotifications, datePipe) {
         var _this = this;
         this.dataService = dataService;
         this.pushNotifications = pushNotifications;
-        this.Date = { day: 30, month: 1, year: 2020 };
-        this.Time = { hour: 17, minute: 20 };
+        this.datePipe = datePipe;
+        this.Date = Date.now();
+        this.Time = { hour: 12, minute: 20 };
         setInterval(function () { _this.checkForNotification(); }, 1000);
     }
     AppComponent.prototype.ngOnInit = function () {
         this.loadReminders();
+        this.datePipe.transform(Date, "yyyy-MM-dd");
     };
     AppComponent.prototype.checkForNotification = function () {
         var timeNow = new Date().toLocaleString().replace(/([^T]+)T([^\.]+).*/g, "$1 $2").substring(0, 17);
@@ -37,7 +40,11 @@ var AppComponent = /** @class */ (function () {
         this.pushNotifications.requestPermission();
     };
     AppComponent.prototype.pushNotification = function (reminder) {
-        this.pushNotifications.create("Reminder", { body: reminder.reminderText });
+        this.pushNotifications.create("Reminder", { body: reminder.reminderText }).subscribe(function (res) {
+            if (res.event.type === "click") {
+                res.notification.close();
+            }
+        });
     };
     AppComponent.prototype.loadReminders = function () {
         var _this = this;
@@ -98,7 +105,7 @@ var AppComponent = /** @class */ (function () {
             templateUrl: "./app.component.html",
             providers: [DataService]
         }),
-        __metadata("design:paramtypes", [DataService, PushNotificationsService])
+        __metadata("design:paramtypes", [DataService, PushNotificationsService, DatePipe])
     ], AppComponent);
     return AppComponent;
 }());

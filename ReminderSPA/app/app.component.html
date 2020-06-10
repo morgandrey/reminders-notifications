@@ -4,7 +4,7 @@
 
         <div class="col-5 mx-sm-1 mb-2">
             <div class="input-group ">
-                <input class="form-control" placeholder="Input text" [(ngModel)]="reminderText" name="body"/>
+                <input required="" class="form-control" placeholder="Введите заметку" [(ngModel)]="reminderText" name="body"/>
             </div>
         </div>
 
@@ -22,10 +22,10 @@
         </div>
 
         <div class="col-3 mx-sm-1 mb-2">
-            <button class="btn btn-outline-primary" (click)="add()">Add a reminder</button>
+            <button class="btn btn-outline-primary" (click)="add()">Добавить заметку</button>
         </div>
         <div class="col-3 mx-sm-1 mb-2">
-            <button class="btn btn-info" *ngIf="this.pushNotifications.permission != 'granted'" (click)="requestPermission()">Enable notifications</button>
+            <button class="btn btn-info" *ngIf="this.pushNotifications.permission != 'granted'" (click)="requestPermission()">Включить уведомления</button>
         </div>
     </div>
 
@@ -33,8 +33,8 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Reminder</th>
-                <th>Response time</th>
+                <th>Заметка</th>
+                <th>Время</th>
             </tr>
             </thead>
             <tbody>
@@ -42,7 +42,7 @@
                 <td>{{reminder.reminderText}}</td>
                 <td>
                     {{reminder.reminderDate}}
-                    <button (click)="delete(reminder)" class="btn btn-sm btn-danger float-right">Delete</button>
+                    <button (click)="delete(reminder)" class="btn btn-sm btn-danger float-right">Удалить</button>
                 </td>
             </tr>
             </tbody>
